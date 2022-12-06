@@ -23,7 +23,7 @@
         style="@style/Widget.Inventario.ListItemTextView"
         android:layout_width="100dp"
         android:layout_below="@+id/item_name"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="@dimen/margin_between_elements"
         android:fontFamily="sans-serif-medium"
         android:textAlignment="center"
         app:layout_constraintEnd_toStartOf="@+id/item_quantity"
