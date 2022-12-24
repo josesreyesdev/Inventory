@@ -74,13 +74,22 @@ class ItemDetailFragment : Fragment() {
         findNavController().navigateUp()
     }
 
+    private fun editItem() {
+        val action = ItemDetailFragmentDirections.actionItemDetailFragmentToAddItemFragment(
+            getString(R.string.edit_fragment_title),
+            item.id
+        )
+        this.findNavController().navigate(action)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         //recuperando el id desde itemListFragment
         val id = navigationArgs.itemId
 
-        viewModel.retrieveditem(id).observe(this.viewLifecycleOwner) { selectedItem ->
+        //recuperando Item por ID
+        viewModel.retrievedItem(id).observe(this.viewLifecycleOwner) { selectedItem ->
             item = selectedItem
             bind(item)
         }
@@ -90,14 +99,6 @@ class ItemDetailFragment : Fragment() {
         super.onDestroyView()
 
         _binding = null
-    }
-
-    private fun editItem() {
-        val action = ItemDetailFragmentDirections.actionItemDetailFragmentToAddItemFragment(
-            getString(R.string.edit_fragment_title),
-            item.id
-        )
-        this.findNavController().navigate(action)
     }
 
 }

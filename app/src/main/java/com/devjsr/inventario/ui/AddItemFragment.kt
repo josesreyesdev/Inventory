@@ -39,32 +39,6 @@ class AddItemFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val id = navigationArgs.itemId
-        if (id > 0) {
-            viewModel.retrieveditem(id).observe( this.viewLifecycleOwner) { selectedItem ->
-                item = selectedItem
-                bind(item)
-            }
-        } else {
-            binding.saveAction.setOnClickListener { addNewItem() }
-        }
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        //Hide/ocultar keyboard
-        val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as
-                InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow( requireActivity().currentFocus?.windowToken, 0)
-
-        _binding = null
-    }
-
     private fun isEntryValid(): Boolean {
         return viewModel.isValidEntry(
             binding.itemName.text.toString(),
@@ -85,7 +59,33 @@ class AddItemFragment : Fragment() {
         }
     }
 
-    //edit item
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val id = navigationArgs.itemId
+        if (id > 0) {
+            viewModel.retrievedItem(id).observe( this.viewLifecycleOwner) { selectedItem ->
+                item = selectedItem
+                bind(item)
+            }
+        } else {
+            binding.saveAction.setOnClickListener { addNewItem() }
+        }
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        //Hide/ocultar keyboard
+        val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as
+                InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow( requireActivity().currentFocus?.windowToken, 0)
+
+        _binding = null
+    }
+
+    //USADO PARA EDITAR UN ITEM
     private fun bind( item: Item) {
         val price = "%.2f".format(item.itemPrice)
         binding.apply {

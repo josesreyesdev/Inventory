@@ -7,8 +7,12 @@ import kotlinx.coroutines.launch
 
 class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
 
+    /** ---------------------------------- ItemListFragment ------------------------------------------- */
+    //Mostrar items
     val allItems: LiveData<List<Item>> = itemDao.getAllItems().asLiveData()
 
+    /** ---------------------------------- AddItemFragment -------------------------------------------- */
+    //Insertar un Item
     private fun insertItem( item: Item) {
         viewModelScope.launch {
             itemDao.insertItem(item)
@@ -28,7 +32,7 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
         insertItem(newItem)
     }
 
-    //Verificar si los texts no estan vacios
+    //Verificar si los texts isn´t empty
     fun isValidEntry( itemName: String, itemPrice: String, itemCount: String): Boolean {
         if (itemName.isBlank() || itemPrice.isBlank() || itemCount.isBlank()) {
             return false
@@ -36,8 +40,9 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
         return true
     }
 
-    //Recuperar los Detalles del item por id
-    fun retrieveditem( id: Int): LiveData<Item> = itemDao.getItemById(id).asLiveData()
+    /** ---------------------------------- ItemDetailFragment -------------------------------------------- */
+    //Recuperar Detalles del item por id
+    fun retrievedItem(id: Int): LiveData<Item> = itemDao.getItemById(id).asLiveData()
 
     private fun updateItem( item: Item) {
         viewModelScope.launch { itemDao.updateItem(item) }
@@ -45,6 +50,7 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
 
     fun sellItem( item: Item) {
         if (item.quantityInStock > 0) {
+            // Decrease the quantity by 1
             val newItem = item.copy( quantityInStock = item.quantityInStock - 1)
             updateItem(newItem)
         }
@@ -60,7 +66,7 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
         }
     }
 
-    //Actualizar/Editar de una entidad
+    //Actualizar/Editar una entidad
     private fun getUpdatedItemEntry(
         itemId: Int,
         itemName: String,
@@ -81,8 +87,8 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
         itemPrice: String,
         itemCount: String
     ) {
-        val updateItem = getUpdatedItemEntry(id, itemName, itemPrice, itemCount)
-        updateItem(updateItem)
+        val updatedItem = getUpdatedItemEntry(id, itemName, itemPrice, itemCount)
+        updateItem(updatedItem)
     }
 
 }
