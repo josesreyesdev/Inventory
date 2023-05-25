@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/item_name"
         style="@style/Widget.Inventario.ListItemTextView"
-        android:layout_width="180dp"
+        android:layout_width="165dp"
         android:layout_marginStart="@dimen/margin_between_elements"
         android:fontFamily="sans-serif"
         app:layout_constraintEnd_toStartOf="@+id/item_price"
