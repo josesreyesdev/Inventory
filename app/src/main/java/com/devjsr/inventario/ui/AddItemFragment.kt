@@ -37,26 +37,6 @@ class AddItemFragment : Fragment() {
         return binding.root
     }
 
-    private fun isEntryValid(): Boolean {
-        return viewModel.isValidEntry(
-            binding.itemName.text.toString(),
-            binding.itemPrice.text.toString(),
-            binding.itemCount.text.toString()
-        )
-    }
-
-    private fun addNewItem() {
-        if (isEntryValid()) {
-            viewModel.addNewItem(
-                binding.itemName.text.toString(),
-                binding.itemPrice.text.toString(),
-                binding.itemCount.text.toString(),
-            )
-            val action = AddItemFragmentDirections.actionAddItemFragmentToItemListFragment()
-            findNavController().navigate(action)
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -81,6 +61,26 @@ class AddItemFragment : Fragment() {
         inputMethodManager.hideSoftInputFromWindow( requireActivity().currentFocus?.windowToken, 0)
 
         _binding = null
+    }
+
+    private fun isEntryValid(): Boolean {
+        return viewModel.isEntryValid(
+            binding.itemName.text.toString(),
+            binding.itemPrice.text.toString(),
+            binding.itemCount.text.toString()
+        )
+    }
+
+    private fun addNewItem() {
+        if (isEntryValid()) {
+            viewModel.addNewItem(
+                binding.itemName.text.toString(),
+                binding.itemPrice.text.toString(),
+                binding.itemCount.text.toString()
+            )
+            val action = AddItemFragmentDirections.actionAddItemFragmentToItemListFragment()
+            findNavController().navigate(action)
+        }
     }
 
     //USADO PARA EDITAR UN ITEM

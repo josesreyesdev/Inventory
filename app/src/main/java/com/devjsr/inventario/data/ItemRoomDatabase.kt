@@ -8,11 +8,11 @@ import androidx.room.RoomDatabase
 @Database( entities = [Item::class], version = 1, exportSchema = false)
 abstract class ItemRoomDatabase : RoomDatabase() {
 
-    abstract fun itemDao(): ItemDao //podemos agregar tantos obj DAO que ocupemos
+    abstract fun itemDao(): ItemDao //agregar tantos obj DAO que ocupemos
 
     companion object {
 
-        @Volatile
+        @Volatile // hace que el valor de INSTANCE nunca se almacene en cache, y sea accesado desde la memoria principal
         private var INSTANCE : ItemRoomDatabase? = null
 
         fun getDatabase( context: Context): ItemRoomDatabase {

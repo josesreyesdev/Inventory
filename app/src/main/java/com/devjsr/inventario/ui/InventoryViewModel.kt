@@ -13,13 +13,13 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
 
     /** ---------------------------------- AddItemFragment -------------------------------------------- */
     //Insertar un Item
-    private fun insertItem( item: Item) {
+    private fun insertItem(item: Item) {
         viewModelScope.launch {
             itemDao.insertItem(item)
         }
     }
 
-    private fun getNewItemEntry( itemName: String, itemPrice: String, itemCount: String) : Item {
+    private fun getNewItemEntry(itemName: String, itemPrice: String, itemCount: String) : Item {
         return Item(
             itemName = itemName,
             itemPrice = itemPrice.toDouble(),
@@ -27,13 +27,13 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
         )
     }
 
-    fun addNewItem( itemName: String, itemPrice: String, itemCount: String) {
+    fun addNewItem(itemName: String, itemPrice: String, itemCount: String) {
         val newItem = getNewItemEntry(itemName, itemPrice, itemCount)
         insertItem(newItem)
     }
 
     //Verificar si los texts isn´t empty
-    fun isValidEntry( itemName: String, itemPrice: String, itemCount: String): Boolean {
+    fun isEntryValid(itemName: String, itemPrice: String, itemCount: String): Boolean {
         return !(itemName.isBlank() || itemPrice.isBlank() || itemCount.isBlank())
     }
 
@@ -41,11 +41,11 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
     //Recuperar Detalles del item por id
     fun retrievedItem(id: Int): LiveData<Item> = itemDao.getItemById(id).asLiveData()
 
-    private fun updateItem( item: Item) {
+    private fun updateItem(item: Item) {
         viewModelScope.launch { itemDao.updateItem(item) }
     }
 
-    fun sellItem( item: Item) {
+    fun sellItem(item: Item) {
         if (item.quantityInStock > 0) {
             // Decrease the quantity by 1
             val newItem = item.copy( quantityInStock = item.quantityInStock - 1)
@@ -54,10 +54,10 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
     }
 
     //Stock disponible?
-    fun isStockAvailable( item: Item): Boolean = (item.quantityInStock > 0)
+    fun isStockAvailable(item: Item): Boolean = (item.quantityInStock > 0)
 
     //borrar una entidad
-    fun deleteItem( item: Item) {
+    fun deleteItem(item: Item) {
         viewModelScope.launch {
             itemDao.deleteItem(item)
         }
