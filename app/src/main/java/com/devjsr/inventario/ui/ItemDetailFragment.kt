@@ -38,49 +38,6 @@ class ItemDetailFragment : Fragment() {
         return binding.root
     }
 
-    /* Display an alert dialog to get the user´s confirmation before deleting the item */
-    private fun showConfirmationDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(getString(android.R.string.dialog_alert_title))
-            .setMessage(getString(R.string.delete_question))
-            .setCancelable(false)
-            .setNegativeButton(getString(R.string.no)) { _,_ ->}
-            .setPositiveButton(getString(R.string.yes)) { _,_ ->
-                deleteItem()
-            }
-            .show()
-    }
-
-    //vincular los txt
-    private fun bind( item: Item) {
-        binding.apply {
-            itemName.text = item.itemName
-            itemPrice.text = item.getFormattedPrice()
-            itemCount.text = item.quantityInStock.toString()
-
-            sellItem.isEnabled = viewModel.isStockAvailable(item)
-            sellItem.setOnClickListener { viewModel.sellItem(item) }
-
-            deleteItem.setOnClickListener { showConfirmationDialog() }
-
-            editItem.setOnClickListener { editItem() }
-        }
-    }
-
-    /* Delete the current item and navigates to the list fragment */
-    private fun deleteItem() {
-        viewModel.deleteItem(item)
-        findNavController().navigateUp()
-    }
-
-    private fun editItem() {
-        val action = ItemDetailFragmentDirections.actionItemDetailFragmentToAddItemFragment(
-            getString(R.string.edit_fragment_title),
-            item.id
-        )
-        this.findNavController().navigate(action)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -100,4 +57,46 @@ class ItemDetailFragment : Fragment() {
         _binding = null
     }
 
+    //vincular los txt
+    private fun bind(item: Item) {
+        binding.apply {
+            itemName.text = item.itemName
+            itemPrice.text = item.getFormattedPrice()
+            itemCount.text = item.quantityInStock.toString()
+
+            sellItem.isEnabled = viewModel.isStockAvailable(item)
+            sellItem.setOnClickListener { viewModel.sellItem(item) }
+
+            deleteItem.setOnClickListener { showConfirmationDialog() }
+
+            editItem.setOnClickListener { editItem() }
+        }
+    }
+
+    /* Display an alert dialog to get the user´s confirmation before deleting the item */
+    private fun showConfirmationDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(android.R.string.dialog_alert_title))
+            .setMessage(getString(R.string.delete_question))
+            .setCancelable(false)
+            .setNegativeButton(getString(R.string.no)) { _,_ ->}
+            .setPositiveButton(getString(R.string.yes)) { _,_ ->
+                deleteItem()
+            }
+            .show()
+    }
+
+    /* Delete the current item and navigates to the list fragment */
+    private fun deleteItem() {
+        viewModel.deleteItem(item)
+        findNavController().navigateUp()
+    }
+
+    private fun editItem() {
+        val action = ItemDetailFragmentDirections.actionItemDetailFragmentToAddItemFragment(
+            getString(R.string.edit_fragment_title),
+            item.id
+        )
+        this.findNavController().navigate(action)
+    }
 }
