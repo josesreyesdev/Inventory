@@ -31,7 +31,6 @@ class AddItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentAddItemBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -42,7 +41,7 @@ class AddItemFragment : Fragment() {
 
         val id = navigationArgs.itemId
         if (id > 0) {
-            viewModel.retrievedItem(id).observe( this.viewLifecycleOwner) { selectedItem ->
+            viewModel.retrievedItem(id).observe(this.viewLifecycleOwner) { selectedItem ->
                 item = selectedItem
                 bind(item)
             }
@@ -84,7 +83,7 @@ class AddItemFragment : Fragment() {
     }
 
     //USADO PARA EDITAR UN ITEM
-    private fun bind( item: Item) {
+    private fun bind(item: Item) {
         val price = "%.2f".format(item.itemPrice)
         binding.apply {
             itemName.setText(item.itemName, TextView.BufferType.SPANNABLE)
