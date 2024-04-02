@@ -38,7 +38,7 @@ class ItemListFragment : Fragment() {
             this.findNavController().navigate(action)
         }
         binding.recyclerView.adapter = adapter
-        viewModel.allItems.observe( this.viewLifecycleOwner) { items ->
+        viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
             items.let {
                 adapter.submitList(items)
             }

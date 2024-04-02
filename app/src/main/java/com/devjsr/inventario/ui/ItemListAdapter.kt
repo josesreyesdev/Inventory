@@ -9,11 +9,11 @@ import com.devjsr.inventario.data.Item
 import com.devjsr.inventario.data.getFormattedPrice
 import com.devjsr.inventario.databinding.ItemListItemBinding
 
-class ItemListAdapter( private val onItemClicked: (Item) -> Unit) :
+class ItemListAdapter(private val onItemClicked: (Item) -> Unit) :
     ListAdapter<Item, ItemListAdapter.ItemViewHolder> (DiffCallback){
 
-    class ItemViewHolder( private var binding: ItemListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind( item: Item) {
+    class ItemViewHolder(private var binding: ItemListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Item) {
             binding.apply {
                 itemName.text = item.itemName
                 itemPrice.text = item.getFormattedPrice()
@@ -23,7 +23,7 @@ class ItemListAdapter( private val onItemClicked: (Item) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(ItemListItemBinding.inflate( LayoutInflater.from(parent.context)))
+        return ItemViewHolder(ItemListItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
