@@ -12,7 +12,6 @@
 - ✨ MVVM, LiveData, Flows, Room, Dao, Databinding
 
 ### Dependencies / Prerequisites
-Add dependencies in app level
 
 ```Kotlin
   dependencies {
